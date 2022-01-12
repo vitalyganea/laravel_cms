@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TablesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
+Route::prefix('/admin')->group(function () {
+    Route::get('/', [TablesController::class, 'getMenu']);
+    Route::get('/table/{id}', [TablesController::class, 'getTable']);
+});
 
 Route::get('/', function () {
     return view('welcome');
