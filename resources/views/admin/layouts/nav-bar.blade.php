@@ -6,7 +6,7 @@
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
-                @foreach (\App\Http\Controllers\TablesController::getMenu() as $menu_element)
+                @foreach ($menu_elements as $menu_element)
                     <li class="nav-item">
                         <a class="nav-link {{ $menu_element->id == request()->id ? "active" : "" }} " href="/admin/table/{{$menu_element->id}}">{{$menu_element->table_text}}</a>
                     </li>
