@@ -27,24 +27,14 @@ class TablesController extends Controller
     public function getTable($id) {
 
         $table_objects = DB::table($this->getTableInformation($id)->table_title)->get();
-        $table_columns =  Schema::getColumnListing($this->getTableInformation($id)->table_title);
 
 
-        if(in_array('image', $table_columns))
-        {
-            array_unshift($table_columns, 'image');
-        }
-        if(in_array('title', $table_columns))
-        {
-            array_unshift($table_columns, 'title');
-        }
-        if(in_array('id', $table_columns))
-        {
-            array_unshift($table_columns, 'id');
-        }
+//        $table_columns =  Schema::getColumnListing($this->getTableInformation($id)->table_title);
 
-        $table_columns = array_unique($table_columns);
-
+        $table_columns = DB::table('column_settings')
+            ->select('*')
+            ->where('table_id', $id)
+            ->get();
         return view('admin/table', [
                 'id' => $id,
                 'menu_elements' => $this->getMenu(),
@@ -84,12 +74,19 @@ class TablesController extends Controller
             }
         }
 
-        if(DB::table('products')->insert($arrayToInsert)){
+        if(DB::table(Tables::findOrFail($id)->table_title)->insert($arrayToInsert)){
             session(['type' => 1,'message' => 'Success']);
         }else{
             session(['type' => 2,'message' => 'Fail']);
         }
         return redirect('admin/table/'.$id);
     }
+
+
+        public function deleteElement(Request $request){
+
+            DB::table($this->getTableInformation($request->table_id)->table_title)->delete($request->element_id);
+
+        }
 
 }

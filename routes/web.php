@@ -20,6 +20,7 @@ Route::prefix('/admin')->group(function () {
     Route::get('/table/{id}', [TablesController::class, 'getTable']);
     Route::get('/create/{id}', [TablesController::class, 'getColumns']);
     Route::post('/create/{id}', [TablesController::class, 'createObject']);
+    Route::post('/deleteElement', [TablesController::class, 'deleteElement']);
 });
 
 Route::get('/', function () {
