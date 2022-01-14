@@ -1,10 +1,15 @@
 @include('admin.layouts.head')
 @include('admin.layouts.nav-bar')
+<div class="d-flex justify-content-between bg-light">
 
-<h1>{{$table_info->table_text}} Administration</h1>
+<h1 class="m-2">{{$table_info->table_text}} Administration</h1>
 
-<a href="/admin/create/{{request()->id}}" type="button" class="btn btn-primary">Add {{$table_info->table_text}}</a>
-
+<a href="/admin/create/{{request()->id}}" >
+    <button class="m-3 btn btn-primary">
+    Add {{$table_info->table_text}}
+    </button>
+</a>
+</div>
 @if(session()->has('message'))
     @if(session('type') == 1)
         <script>swal("SUCCESS!", "{{session('message')}}", "success");</script>
@@ -16,7 +21,7 @@
     {{Session::forget('type')}}
 @endif()
 
-<table class="table">
+<table class="table table-bordered">
     <thead>
     <tr>
         <th>ID</th>
@@ -37,12 +42,12 @@
                 <td> {{ Str::limit($table_object->$column_title, 90) }}</td>
         @endforeach
             <th>
-                <i class="fa fa-pencil" style="font-size:24px; padding:3px"></i>
-                <i class="delete_element fa fa-trash" id="{{$table_object->id}}" style="font-size:24px; padding:3px"></i>
+                <i class="fa fa-pencil fa-lg" style="font-size:24px; padding:3px"></i>
+                <i class="delete_element fa fa-trash-o fa-lg" id="{{$table_object->id}}" style="font-size:24px; padding:3px"></i>
                 @if($table_object->visible==1)
-                <i class="fa fa-eye" style="font-size:24px; padding:3px"></i>
+                <i class="fa fa-eye fa-lg" style="font-size:24px; padding:3px"></i>
                 @else
-                <i class="fa fa-eye-slash" style="font-size:24px; padding:3px"></i>
+                <i class="fa fa-eye-slash fa-lg" style="font-size:24px; padding:3px"></i>
                 @endif
             </th>
         </tr>
